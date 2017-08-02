@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.niepeng.xue.wenshiplugin.dao.mapper.WorkplaceDOMapper" >
+  <resultMap id="BaseResultMap" type="com.niepeng.xue.wenshiplugin.dao.WorkplaceDO" >
+    <id column="placeId" property="placeid" jdbcType="INTEGER" />
+    <result column="placeName" property="placename" jdbcType="VARCHAR" />
+    <result column="useless" property="useless" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    placeId, placeName, useless, remark
+  </sql>
+
+  <select id="findList" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tworkplace
+    where placeId > 0 and useless >= 1
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from tworkplace
+    where placeId = #{placeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tworkplace
+    where placeId = #{placeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niepeng.xue.wenshiplugin.dao.WorkplaceDO" >
+    insert into tworkplace (placeId, placeName, useless, 
+      remark)
+    values (#{placeid,jdbcType=INTEGER}, #{placename,jdbcType=VARCHAR}, #{useless,jdbcType=INTEGER},
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.niepeng.xue.wenshiplugin.dao.WorkplaceDO" >
+    insert into tworkplace
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="placeid != null" >
+        placeId,
+      </if>
+      <if test="placename != null" >
+        placeName,
+      </if>
+      <if test="useless != null" >
+        useless,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="placeid != null" >
+        #{placeid,jdbcType=INTEGER},
+      </if>
+      <if test="placename != null" >
+        #{placename,jdbcType=VARCHAR},
+      </if>
+      <if test="useless != null" >
+        #{useless,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niepeng.xue.wenshiplugin.dao.WorkplaceDO" >
+    update tworkplace
+    <set >
+      <if test="placename != null" >
+        placeName = #{placename,jdbcType=VARCHAR},
+      </if>
+      <if test="useless != null" >
+        useless = #{useless,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where placeId = #{placeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niepeng.xue.wenshiplugin.dao.WorkplaceDO" >
+    update tworkplace
+    set placeName = #{placename,jdbcType=VARCHAR},
+      useless = #{useless,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where placeId = #{placeid,jdbcType=INTEGER}
+  </update>
+</mapper>

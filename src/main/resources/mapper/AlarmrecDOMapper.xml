@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.niepeng.xue.wenshiplugin.dao.mapper.AlarmrecDOMapper" >
+  <resultMap id="BaseResultMap" type="com.niepeng.xue.wenshiplugin.dao.AlarmrecDO" >
+    <id column="alarmId" property="alarmid" jdbcType="INTEGER" />
+    <result column="temperature" property="temperature" jdbcType="VARCHAR" />
+    <result column="humidity" property="humidity" jdbcType="VARCHAR" />
+    <result column="alarmStart" property="alarmstart" jdbcType="BIGINT" />
+    <result column="alarmEnd" property="alarmend" jdbcType="BIGINT" />
+    <result column="alarmtype" property="alarmtype" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="alarmmode" property="alarmmode" jdbcType="INTEGER" />
+    <result column="equipmentId" property="equipmentid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="placeName" property="placename" jdbcType="VARCHAR" />
+    <result column="normalArea" property="normalarea" jdbcType="VARCHAR" />
+    <result column="equitype" property="equitype" jdbcType="INTEGER" />
+    <result column="gprsFlag" property="gprsflag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    alarmId, temperature, humidity, alarmStart, alarmEnd, alarmtype, state, alarmmode, 
+    equipmentId, username, placeName, normalArea, equitype, gprsFlag
+  </sql>
+  <select id="selectAlarmLastOne" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from talarmrec
+    where state = 2 order by alarmId desc limit 1
+  </select>
+
+  <select id="selectByAfterAlaramid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from talarmrec
+    where alarmId > #{alarmid,jdbcType=INTEGER}
+    AND   state = 2 order by alarmId asc limit 100
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from talarmrec
+    where alarmId = #{alarmid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from talarmrec
+    where alarmId = #{alarmid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niepeng.xue.wenshiplugin.dao.AlarmrecDO" >
+    insert into talarmrec (alarmId, temperature, humidity, 
+      alarmStart, alarmEnd, alarmtype, 
+      state, alarmmode, equipmentId, 
+      username, placeName, normalArea, 
+      equitype, gprsFlag)
+    values (#{alarmid,jdbcType=INTEGER}, #{temperature,jdbcType=VARCHAR}, #{humidity,jdbcType=VARCHAR}, 
+      #{alarmstart,jdbcType=BIGINT}, #{alarmend,jdbcType=BIGINT}, #{alarmtype,jdbcType=INTEGER},
+      #{state,jdbcType=INTEGER}, #{alarmmode,jdbcType=INTEGER}, #{equipmentid,jdbcType=INTEGER},
+      #{username,jdbcType=VARCHAR}, #{placename,jdbcType=VARCHAR}, #{normalarea,jdbcType=VARCHAR}, 
+      #{equitype,jdbcType=INTEGER}, #{gprsflag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.niepeng.xue.wenshiplugin.dao.AlarmrecDO" >
+    insert into talarmrec
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="alarmid != null" >
+        alarmId,
+      </if>
+      <if test="temperature != null" >
+        temperature,
+      </if>
+      <if test="humidity != null" >
+        humidity,
+      </if>
+      <if test="alarmstart != null" >
+        alarmStart,
+      </if>
+      <if test="alarmend != null" >
+        alarmEnd,
+      </if>
+      <if test="alarmtype != null" >
+        alarmtype,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="alarmmode != null" >
+        alarmmode,
+      </if>
+      <if test="equipmentid != null" >
+        equipmentId,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="placename != null" >
+        placeName,
+      </if>
+      <if test="normalarea != null" >
+        normalArea,
+      </if>
+      <if test="equitype != null" >
+        equitype,
+      </if>
+      <if test="gprsflag != null" >
+        gprsFlag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="alarmid != null" >
+        #{alarmid,jdbcType=INTEGER},
+      </if>
+      <if test="temperature != null" >
+        #{temperature,jdbcType=VARCHAR},
+      </if>
+      <if test="humidity != null" >
+        #{humidity,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmstart != null" >
+        #{alarmstart,jdbcType=BIGINT},
+      </if>
+      <if test="alarmend != null" >
+        #{alarmend,jdbcType=BIGINT},
+      </if>
+      <if test="alarmtype != null" >
+        #{alarmtype,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="alarmmode != null" >
+        #{alarmmode,jdbcType=INTEGER},
+      </if>
+      <if test="equipmentid != null" >
+        #{equipmentid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="placename != null" >
+        #{placename,jdbcType=VARCHAR},
+      </if>
+      <if test="normalarea != null" >
+        #{normalarea,jdbcType=VARCHAR},
+      </if>
+      <if test="equitype != null" >
+        #{equitype,jdbcType=INTEGER},
+      </if>
+      <if test="gprsflag != null" >
+        #{gprsflag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niepeng.xue.wenshiplugin.dao.AlarmrecDO" >
+    update talarmrec
+    <set >
+      <if test="temperature != null" >
+        temperature = #{temperature,jdbcType=VARCHAR},
+      </if>
+      <if test="humidity != null" >
+        humidity = #{humidity,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmstart != null" >
+        alarmStart = #{alarmstart,jdbcType=BIGINT},
+      </if>
+      <if test="alarmend != null" >
+        alarmEnd = #{alarmend,jdbcType=BIGINT},
+      </if>
+      <if test="alarmtype != null" >
+        alarmtype = #{alarmtype,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="alarmmode != null" >
+        alarmmode = #{alarmmode,jdbcType=INTEGER},
+      </if>
+      <if test="equipmentid != null" >
+        equipmentId = #{equipmentid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="placename != null" >
+        placeName = #{placename,jdbcType=VARCHAR},
+      </if>
+      <if test="normalarea != null" >
+        normalArea = #{normalarea,jdbcType=VARCHAR},
+      </if>
+      <if test="equitype != null" >
+        equitype = #{equitype,jdbcType=INTEGER},
+      </if>
+      <if test="gprsflag != null" >
+        gprsFlag = #{gprsflag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where alarmId = #{alarmid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.niepeng.xue.wenshiplugin.dao.AlarmrecDO" >
+    update talarmrec
+    set temperature = #{temperature,jdbcType=VARCHAR},
+      humidity = #{humidity,jdbcType=VARCHAR},
+      alarmStart = #{alarmstart,jdbcType=BIGINT},
+      alarmEnd = #{alarmend,jdbcType=BIGINT},
+      alarmtype = #{alarmtype,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      alarmmode = #{alarmmode,jdbcType=INTEGER},
+      equipmentId = #{equipmentid,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      placeName = #{placename,jdbcType=VARCHAR},
+      normalArea = #{normalarea,jdbcType=VARCHAR},
+      equitype = #{equitype,jdbcType=INTEGER},
+      gprsFlag = #{gprsflag,jdbcType=INTEGER}
+    where alarmId = #{alarmid,jdbcType=INTEGER}
+  </update>
+</mapper>

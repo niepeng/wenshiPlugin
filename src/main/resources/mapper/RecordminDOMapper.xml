@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.niepeng.xue.wenshiplugin.dao.mapper.RecordminDOMapper" >
+  <resultMap id="BaseResultMap" type="com.niepeng.xue.wenshiplugin.dao.RecordminDO" >
+    <id column="recId" property="recid" jdbcType="INTEGER" />
+    <result column="equipmentId" property="equipmentid" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="INTEGER" />
+    <result column="temp" property="temp" jdbcType="REAL" />
+    <result column="humi" property="humi" jdbcType="REAL" />
+    <result column="dewPoint" property="dewpoint" jdbcType="REAL" />
+    <result column="powerV" property="powerv" jdbcType="REAL" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="recTime" property="rectime" jdbcType="TIMESTAMP" />
+    <result column="recLong" property="reclong" jdbcType="BIGINT" />
+    <result column="mark" property="mark" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    recId, equipmentId, address, temp, humi, dewPoint, powerV, state, recTime, recLong, 
+    mark
+  </sql>
+
+  <select id="getLastRecTime" resultType="java.lang.Long" >
+    SELECT max(recLong) FROM trecordmin
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from trecordmin
+    where
+      mark= 1
+    AND
+      recLong > #{minRecLong,jdbcType=BIGINT}
+    AND
+    <![CDATA[
+		 recLong < #{maxRecLong,jdbcType=BIGINT}
+		 ]]>
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from trecordmin
+    where recId = #{recid,jdbcType=INTEGER}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from trecordmin
+    where recId = #{recid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niepeng.xue.wenshiplugin.dao.RecordminDO" >
+    insert into trecordmin (recId, equipmentId, address, 
+      temp, humi, dewPoint, powerV, 
+      state, recTime, recLong, 
+      mark)
+    values (#{recid,jdbcType=INTEGER}, #{equipmentid,jdbcType=INTEGER}, #{address,jdbcType=INTEGER},
+      #{temp,jdbcType=REAL}, #{humi,jdbcType=REAL}, #{dewpoint,jdbcType=REAL}, #{powerv,jdbcType=REAL}, 
+      #{state,jdbcType=INTEGER}, #{rectime,jdbcType=TIMESTAMP}, #{reclong,jdbcType=BIGINT},
+      #{mark,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.niepeng.xue.wenshiplugin.dao.RecordminDO" >
+    insert into trecordmin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recid != null" >
+        recId,
+      </if>
+      <if test="equipmentid != null" >
+        equipmentId,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="temp != null" >
+        temp,
+      </if>
+      <if test="humi != null" >
+        humi,
+      </if>
+      <if test="dewpoint != null" >
+        dewPoint,
+      </if>
+      <if test="powerv != null" >
+        powerV,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="rectime != null" >
+        recTime,
+      </if>
+      <if test="reclong != null" >
+        recLong,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recid != null" >
+        #{recid,jdbcType=INTEGER},
+      </if>
+      <if test="equipmentid != null" >
+        #{equipmentid,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=INTEGER},
+      </if>
+      <if test="temp != null" >
+        #{temp,jdbcType=REAL},
+      </if>
+      <if test="humi != null" >
+        #{humi,jdbcType=REAL},
+      </if>
+      <if test="dewpoint != null" >
+        #{dewpoint,jdbcType=REAL},
+      </if>
+      <if test="powerv != null" >
+        #{powerv,jdbcType=REAL},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="rectime != null" >
+        #{rectime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reclong != null" >
+        #{reclong,jdbcType=BIGINT},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niepeng.xue.wenshiplugin.dao.RecordminDO" >
+    update trecordmin
+    <set >
+      <if test="equipmentid != null" >
+        equipmentId = #{equipmentid,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=INTEGER},
+      </if>
+      <if test="temp != null" >
+        temp = #{temp,jdbcType=REAL},
+      </if>
+      <if test="humi != null" >
+        humi = #{humi,jdbcType=REAL},
+      </if>
+      <if test="dewpoint != null" >
+        dewPoint = #{dewpoint,jdbcType=REAL},
+      </if>
+      <if test="powerv != null" >
+        powerV = #{powerv,jdbcType=REAL},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="rectime != null" >
+        recTime = #{rectime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reclong != null" >
+        recLong = #{reclong,jdbcType=BIGINT},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=INTEGER},
+      </if>
+    </set>
+    where recId = #{recid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niepeng.xue.wenshiplugin.dao.RecordminDO" >
+    update trecordmin
+    set equipmentId = #{equipmentid,jdbcType=INTEGER},
+      address = #{address,jdbcType=INTEGER},
+      temp = #{temp,jdbcType=REAL},
+      humi = #{humi,jdbcType=REAL},
+      dewPoint = #{dewpoint,jdbcType=REAL},
+      powerV = #{powerv,jdbcType=REAL},
+      state = #{state,jdbcType=INTEGER},
+      recTime = #{rectime,jdbcType=TIMESTAMP},
+      recLong = #{reclong,jdbcType=BIGINT},
+      mark = #{mark,jdbcType=INTEGER}
+    where recId = #{recid,jdbcType=INTEGER}
+  </update>
+</mapper>

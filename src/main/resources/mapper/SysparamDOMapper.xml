@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.niepeng.xue.wenshiplugin.dao.mapper.SysparamDOMapper" >
+  <resultMap id="BaseResultMap" type="com.niepeng.xue.wenshiplugin.dao.SysparamDO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="argsKey" property="argskey" jdbcType="VARCHAR" />
+    <result column="argsValue" property="argsvalue" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, argsKey, argsValue
+  </sql>
+  <select id="selectByArgskey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tsysparam
+    where argsKey = #{argskey,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from tsysparam
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tsysparam
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niepeng.xue.wenshiplugin.dao.SysparamDO" >
+    insert into tsysparam (id, argsKey, argsValue
+      )
+    values (#{id,jdbcType=INTEGER}, #{argskey,jdbcType=VARCHAR}, #{argsvalue,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.niepeng.xue.wenshiplugin.dao.SysparamDO" >
+    insert into tsysparam
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="argskey != null" >
+        argsKey,
+      </if>
+      <if test="argsvalue != null" >
+        argsValue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="argskey != null" >
+        #{argskey,jdbcType=VARCHAR},
+      </if>
+      <if test="argsvalue != null" >
+        #{argsvalue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niepeng.xue.wenshiplugin.dao.SysparamDO" >
+    update tsysparam
+    <set >
+      <if test="argskey != null" >
+        argsKey = #{argskey,jdbcType=VARCHAR},
+      </if>
+      <if test="argsvalue != null" >
+        argsValue = #{argsvalue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niepeng.xue.wenshiplugin.dao.SysparamDO" >
+    update tsysparam
+    set argsKey = #{argskey,jdbcType=VARCHAR},
+      argsValue = #{argsvalue,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

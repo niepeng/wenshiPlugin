@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.niepeng.xue.wenshiplugin.dao.mapper.EquipdataDOMapper" >
+  <resultMap id="BaseResultMap" type="com.niepeng.xue.wenshiplugin.dao.EquipdataDO" >
+    <id column="equipmentId" property="equipmentid" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="INTEGER" />
+    <result column="equitype" property="equitype" jdbcType="INTEGER" />
+    <result column="mark" property="mark" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="tempUp" property="tempup" jdbcType="REAL" />
+    <result column="tempDown" property="tempdown" jdbcType="REAL" />
+    <result column="tempDev" property="tempdev" jdbcType="REAL" />
+    <result column="humiUp" property="humiup" jdbcType="REAL" />
+    <result column="humiDown" property="humidown" jdbcType="REAL" />
+    <result column="humiDev" property="humidev" jdbcType="REAL" />
+    <result column="equiorder" property="equiorder" jdbcType="INTEGER" />
+    <result column="placeId" property="placeid" jdbcType="INTEGER" />
+    <result column="useless" property="useless" jdbcType="BIT" />
+    <result column="showPower" property="showpower" jdbcType="BIT" />
+    <result column="powerType" property="powertype" jdbcType="INTEGER" />
+    <result column="dsrsn" property="dsrsn" jdbcType="VARCHAR" />
+    <result column="showAccess" property="showaccess" jdbcType="BIT" />
+    <result column="conndata" property="conndata" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    equipmentId, address, equitype, mark, remark, tempUp, tempDown, tempDev, humiUp, 
+    humiDown, humiDev, equiorder, placeId, useless, showPower, powerType, dsrsn, showAccess, 
+    conndata
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tequipdata
+    where equipmentId = #{equipmentid,jdbcType=INTEGER}
+  </select>
+
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tequipdata
+    where equipmentId = #{equipmentid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niepeng.xue.wenshiplugin.dao.EquipdataDO" >
+    insert into tequipdata (equipmentId, address, equitype, 
+      mark, remark, tempUp, 
+      tempDown, tempDev, humiUp, humiDown, 
+      humiDev, equiorder, placeId, 
+      useless, showPower, powerType, 
+      dsrsn, showAccess, conndata
+      )
+    values (#{equipmentid,jdbcType=INTEGER}, #{address,jdbcType=INTEGER}, #{equitype,jdbcType=INTEGER},
+      #{mark,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{tempup,jdbcType=REAL}, 
+      #{tempdown,jdbcType=REAL}, #{tempdev,jdbcType=REAL}, #{humiup,jdbcType=REAL}, #{humidown,jdbcType=REAL}, 
+      #{humidev,jdbcType=REAL}, #{equiorder,jdbcType=INTEGER}, #{placeid,jdbcType=INTEGER},
+      #{useless,jdbcType=BIT}, #{showpower,jdbcType=BIT}, #{powertype,jdbcType=INTEGER},
+      #{dsrsn,jdbcType=VARCHAR}, #{showaccess,jdbcType=BIT}, #{conndata,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.niepeng.xue.wenshiplugin.dao.EquipdataDO" >
+    insert into tequipdata
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="equipmentid != null" >
+        equipmentId,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="equitype != null" >
+        equitype,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="tempup != null" >
+        tempUp,
+      </if>
+      <if test="tempdown != null" >
+        tempDown,
+      </if>
+      <if test="tempdev != null" >
+        tempDev,
+      </if>
+      <if test="humiup != null" >
+        humiUp,
+      </if>
+      <if test="humidown != null" >
+        humiDown,
+      </if>
+      <if test="humidev != null" >
+        humiDev,
+      </if>
+      <if test="equiorder != null" >
+        equiorder,
+      </if>
+      <if test="placeid != null" >
+        placeId,
+      </if>
+      <if test="useless != null" >
+        useless,
+      </if>
+      <if test="showpower != null" >
+        showPower,
+      </if>
+      <if test="powertype != null" >
+        powerType,
+      </if>
+      <if test="dsrsn != null" >
+        dsrsn,
+      </if>
+      <if test="showaccess != null" >
+        showAccess,
+      </if>
+      <if test="conndata != null" >
+        conndata,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="equipmentid != null" >
+        #{equipmentid,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=INTEGER},
+      </if>
+      <if test="equitype != null" >
+        #{equitype,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="tempup != null" >
+        #{tempup,jdbcType=REAL},
+      </if>
+      <if test="tempdown != null" >
+        #{tempdown,jdbcType=REAL},
+      </if>
+      <if test="tempdev != null" >
+        #{tempdev,jdbcType=REAL},
+      </if>
+      <if test="humiup != null" >
+        #{humiup,jdbcType=REAL},
+      </if>
+      <if test="humidown != null" >
+        #{humidown,jdbcType=REAL},
+      </if>
+      <if test="humidev != null" >
+        #{humidev,jdbcType=REAL},
+      </if>
+      <if test="equiorder != null" >
+        #{equiorder,jdbcType=INTEGER},
+      </if>
+      <if test="placeid != null" >
+        #{placeid,jdbcType=INTEGER},
+      </if>
+      <if test="useless != null" >
+        #{useless,jdbcType=BIT},
+      </if>
+      <if test="showpower != null" >
+        #{showpower,jdbcType=BIT},
+      </if>
+      <if test="powertype != null" >
+        #{powertype,jdbcType=INTEGER},
+      </if>
+      <if test="dsrsn != null" >
+        #{dsrsn,jdbcType=VARCHAR},
+      </if>
+      <if test="showaccess != null" >
+        #{showaccess,jdbcType=BIT},
+      </if>
+      <if test="conndata != null" >
+        #{conndata,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niepeng.xue.wenshiplugin.dao.EquipdataDO" >
+    update tequipdata
+    <set >
+      <if test="address != null" >
+        address = #{address,jdbcType=INTEGER},
+      </if>
+      <if test="equitype != null" >
+        equitype = #{equitype,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="tempup != null" >
+        tempUp = #{tempup,jdbcType=REAL},
+      </if>
+      <if test="tempdown != null" >
+        tempDown = #{tempdown,jdbcType=REAL},
+      </if>
+      <if test="tempdev != null" >
+        tempDev = #{tempdev,jdbcType=REAL},
+      </if>
+      <if test="humiup != null" >
+        humiUp = #{humiup,jdbcType=REAL},
+      </if>
+      <if test="humidown != null" >
+        humiDown = #{humidown,jdbcType=REAL},
+      </if>
+      <if test="humidev != null" >
+        humiDev = #{humidev,jdbcType=REAL},
+      </if>
+      <if test="equiorder != null" >
+        equiorder = #{equiorder,jdbcType=INTEGER},
+      </if>
+      <if test="placeid != null" >
+        placeId = #{placeid,jdbcType=INTEGER},
+      </if>
+      <if test="useless != null" >
+        useless = #{useless,jdbcType=BIT},
+      </if>
+      <if test="showpower != null" >
+        showPower = #{showpower,jdbcType=BIT},
+      </if>
+      <if test="powertype != null" >
+        powerType = #{powertype,jdbcType=INTEGER},
+      </if>
+      <if test="dsrsn != null" >
+        dsrsn = #{dsrsn,jdbcType=VARCHAR},
+      </if>
+      <if test="showaccess != null" >
+        showAccess = #{showaccess,jdbcType=BIT},
+      </if>
+      <if test="conndata != null" >
+        conndata = #{conndata,jdbcType=BIT},
+      </if>
+    </set>
+    where equipmentId = #{equipmentid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niepeng.xue.wenshiplugin.dao.EquipdataDO" >
+    update tequipdata
+    set address = #{address,jdbcType=INTEGER},
+      equitype = #{equitype,jdbcType=INTEGER},
+      mark = #{mark,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      tempUp = #{tempup,jdbcType=REAL},
+      tempDown = #{tempdown,jdbcType=REAL},
+      tempDev = #{tempdev,jdbcType=REAL},
+      humiUp = #{humiup,jdbcType=REAL},
+      humiDown = #{humidown,jdbcType=REAL},
+      humiDev = #{humidev,jdbcType=REAL},
+      equiorder = #{equiorder,jdbcType=INTEGER},
+      placeId = #{placeid,jdbcType=INTEGER},
+      useless = #{useless,jdbcType=BIT},
+      showPower = #{showpower,jdbcType=BIT},
+      powerType = #{powertype,jdbcType=INTEGER},
+      dsrsn = #{dsrsn,jdbcType=VARCHAR},
+      showAccess = #{showaccess,jdbcType=BIT},
+      conndata = #{conndata,jdbcType=BIT}
+    where equipmentId = #{equipmentid,jdbcType=INTEGER}
+  </update>
+</mapper>
