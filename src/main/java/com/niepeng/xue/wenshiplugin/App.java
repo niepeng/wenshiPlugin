@@ -3,6 +3,7 @@ package com.niepeng.xue.wenshiplugin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author 聂鹏
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 17/8/2
  */
 @SpringBootApplication
+@EnableScheduling
 public class App {
 
   public static void main(String args []) {

@@ -16,9 +16,9 @@
     </File>
   </Appenders>
   <Loggers>
-    <Logger name="com.niepeng.xue.wenshiplugin" level="debug" />
+    <Logger name="com.niepeng.xue.wenshiplugin" level="info" />
     <!--记录 qg.fangrui.boot 包及其子包 debug 及其以上的记录，并输出到文件中-->
-    <Logger name="com.niepeng.springbootts.controllers" level="debug">
+    <Logger name="com.niepeng.springbootts.controllers" level="info">
       <!-- AppenderRef 可以控制文件输出对象-->
       <AppenderRef ref="File" />
     </Logger>

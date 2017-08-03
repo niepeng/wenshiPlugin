@@ -4,6 +4,7 @@ package com.niepeng.xue.wenshiplugin.services;
  */
 
 
+import com.niepeng.xue.wenshiplugin.bean.AlarmBean;
 import com.niepeng.xue.wenshiplugin.bean.AreaBean;
 import com.niepeng.xue.wenshiplugin.bean.EquBean;
 import com.niepeng.xue.wenshiplugin.bean.UserBean;
@@ -60,6 +61,8 @@ public class DataService {
    * 数据库查找是否有绑定的账户:返回非null,即为有用户绑定
    */
   public UserBean findUser() {
+
+
     SysparamDO userIdParam = sysparamDOMapper.selectByArgskey(Constant.ANDROID_IPHONE_USER_ID);
     SysparamDO userNameParam = sysparamDOMapper.selectByArgskey(Constant.ANDROID_IPHONE_USER_NAME);
     SysparamDO passwordParam = sysparamDOMapper.selectByArgskey(Constant.ANDROID_IPHONE_PSW);
@@ -151,12 +154,16 @@ public class DataService {
    * 1.如果重来都没有上传过报警数据,那么获取一条最新的报警数据,上传,并记录最近一次上传的alarmid
    * 2.如果有上传过报警数据,那么从该报警数据开始之后的数据上传,并记录最近一次上传的alarmid
    */
-  public void findAlaram() {
+  public List<AlarmBean> findAlaram() {
 
+    // TODO ..实现alarmBean的属性组装
     AlarmrecDO fromDB = alarmrecDOMapper.selectAlarmLastOne();
     int lastUploadAlarmId = 3;
     List<AlarmrecDO> list = alarmrecDOMapper.selectByAfterAlaramid(lastUploadAlarmId);
 
+
+
+    return null;
   }
 
 

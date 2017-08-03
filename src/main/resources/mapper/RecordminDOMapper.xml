@@ -20,7 +20,7 @@
   </sql>
 
   <select id="getLastRecTime" resultType="java.lang.Long" >
-    SELECT max(recLong) FROM trecordmin
+    SELECT max(recLong) FROM trecordmin  where mark=1
   </select>
 
   <select id="queryList" resultMap="BaseResultMap" parameterType="java.util.Map" >
