@@ -20,7 +20,7 @@
   </sql>
 
   <select id="getLastRecTime" resultType="java.lang.Long" >
-    SELECT max(recLong) FROM trecordmin  where mark=1
+    SELECT max(recLong) FROM trecordmin
   </select>
 
   <select id="queryList" resultMap="BaseResultMap" parameterType="java.util.Map" >
@@ -28,13 +28,12 @@
     <include refid="Base_Column_List" />
     from trecordmin
     where
-      mark= 1
-    AND
       recLong > #{minRecLong,jdbcType=BIGINT}
     AND
     <![CDATA[
 		 recLong < #{maxRecLong,jdbcType=BIGINT}
 		 ]]>
+    order by recLong desc
   </select>
 
 

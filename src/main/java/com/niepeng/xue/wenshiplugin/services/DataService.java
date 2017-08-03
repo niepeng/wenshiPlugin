@@ -1,8 +1,4 @@
 package com.niepeng.xue.wenshiplugin.services;
-/**
- * Created by lsb on 17/8/2.
- */
-
 
 import com.niepeng.xue.wenshiplugin.bean.AlarmBean;
 import com.niepeng.xue.wenshiplugin.bean.AreaBean;
@@ -10,7 +6,6 @@ import com.niepeng.xue.wenshiplugin.bean.EquBean;
 import com.niepeng.xue.wenshiplugin.bean.UserBean;
 import com.niepeng.xue.wenshiplugin.bean.convert.DataConvert;
 import com.niepeng.xue.wenshiplugin.common.Constant;
-import com.niepeng.xue.wenshiplugin.common.util.DateUtil;
 import com.niepeng.xue.wenshiplugin.dao.AlarmrecDO;
 import com.niepeng.xue.wenshiplugin.dao.EquipdataDO;
 import com.niepeng.xue.wenshiplugin.dao.RecordminDO;
@@ -22,8 +17,6 @@ import com.niepeng.xue.wenshiplugin.dao.mapper.RecordminDOMapper;
 import com.niepeng.xue.wenshiplugin.dao.mapper.SysparamDOMapper;
 import com.niepeng.xue.wenshiplugin.dao.mapper.WorkplaceDOMapper;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -109,17 +102,20 @@ public class DataService {
     // 2.获取设备基本信息
     EquBean tmpEquBean;
     for (RecordminDO r : list) {
-      tmpEquBean = DataConvert.getEquBean(r);
-      resultList.add(tmpEquBean);
       EquipdataDO tmpEquipData = null;
       if (equipdataDOMap.containsKey(r.getEquipmentid())) {
-        tmpEquipData = equipdataDOMap.get(r.getEquipmentid());
+//        tmpEquipData = equipdataDOMap.get(r.getEquipmentid());
+        // 一个设备一次只上传一条数据
+        continue;
       } else {
         tmpEquipData = equipdataDOMapper.selectByPrimaryKey(r.getEquipmentid());
         if (tmpEquipData != null) {
           equipdataDOMap.put(r.getEquipmentid(), tmpEquipData);
         }
       }
+
+      tmpEquBean = DataConvert.getEquBean(r);
+      resultList.add(tmpEquBean);
 
       if (tmpEquipData != null) {
         tmpEquBean.setEqutype(tmpEquipData.getEquitype());
