@@ -6,6 +6,7 @@ import com.niepeng.xue.wenshiplugin.bean.EquBean;
 import com.niepeng.xue.wenshiplugin.bean.UserBean;
 import com.niepeng.xue.wenshiplugin.bean.convert.DataConvert;
 import com.niepeng.xue.wenshiplugin.common.Constant;
+import com.niepeng.xue.wenshiplugin.common.util.DateUtil;
 import com.niepeng.xue.wenshiplugin.dao.AlarmrecDO;
 import com.niepeng.xue.wenshiplugin.dao.EquipdataDO;
 import com.niepeng.xue.wenshiplugin.dao.RecordminDO;
@@ -17,6 +18,7 @@ import com.niepeng.xue.wenshiplugin.dao.mapper.RecordminDOMapper;
 import com.niepeng.xue.wenshiplugin.dao.mapper.SysparamDOMapper;
 import com.niepeng.xue.wenshiplugin.dao.mapper.WorkplaceDOMapper;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +51,10 @@ public class DataService {
   @Autowired
   private AlarmrecDOMapper alarmrecDOMapper;
 
+  // 最近成功上传的报警数据
+  static int lastUploadAlarmId = 0;
+
+  static final long DISTANCE_ALARM_TIMES = 10 * 60 * 1000;
 
   /**
    * 数据库查找是否有绑定的账户:返回非null,即为有用户绑定
@@ -151,17 +157,56 @@ public class DataService {
    * 2.如果有上传过报警数据,那么从该报警数据开始之后的数据上传,并记录最近一次上传的alarmid
    */
   public List<AlarmBean> findAlaram() {
+    // 软件刚重启的时候
+    if (lastUploadAlarmId == 0) {
+      AlarmrecDO fromDB = alarmrecDOMapper.selectAlarmLastOne();
+      if (fromDB == null) {
+        return null;
+      }
+      // 最近一次报警如果超过5分钟,那么就不上传了
+      Date alarmTime = new Date(fromDB.getAlarmstart());
+      if (DateUtil.distance(new Date(), alarmTime) < DISTANCE_ALARM_TIMES) {
+        List<AlarmBean> result = new ArrayList<>();
+        AlarmBean alarmBean = getAlarmBean(fromDB);
+        if (alarmBean != null) {
+          result.add(alarmBean);
+        }
+        return result;
+      }
+      lastUploadAlarmId = fromDB.getAlarmid();
+      return null;
+    }
 
-    // TODO ..实现alarmBean的属性组装
-    AlarmrecDO fromDB = alarmrecDOMapper.selectAlarmLastOne();
-    int lastUploadAlarmId = 3;
+    // 非软件重新启动的时候
     List<AlarmrecDO> list = alarmrecDOMapper.selectByAfterAlaramid(lastUploadAlarmId);
+    if (CollectionUtils.isEmpty(list)) {
+      return null;
+    }
 
-
-
-    return null;
+    List<AlarmBean> result = new ArrayList<>();
+    lastUploadAlarmId = list.get(list.size() - 1).getAlarmid();
+    for (AlarmrecDO tmpBean : list) {
+      AlarmBean alarmBean = getAlarmBean(tmpBean);
+      if (alarmBean != null) {
+        result.add(alarmBean);
+      }
+    }
+    return result;
   }
 
-
+  private AlarmBean getAlarmBean(AlarmrecDO alarmrecDO) {
+    EquipdataDO equipdataFromDB = equipdataDOMapper.selectByPrimaryKey(alarmrecDO.getEquipmentid());
+    if (equipdataFromDB == null) {
+      return null;
+    }
+    Date alarmTime = new Date(alarmrecDO.getAlarmstart());
+    AlarmBean bean = new AlarmBean();
+    bean.setLastAlarmTime(alarmTime);
+    bean.setAlarmTime(alarmTime);
+    bean.setAddress(equipdataFromDB.getAddress());
+    String reason = "仪器名:" + equipdataFromDB.getMark() + ",温度:" + alarmrecDO.getTemperature() + "湿度:" + alarmrecDO.getHumidity() + ", " + alarmrecDO.getNormalarea();
+    bean.setReason(reason);
+    return bean;
+  }
 
 }

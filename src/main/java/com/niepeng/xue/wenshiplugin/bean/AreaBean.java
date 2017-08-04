@@ -50,6 +50,6 @@ public class AreaBean {
 
   @Override
   public int hashCode() {
-    return name != null ? name.hashCode() : ((int) referId);
+    return name != null ? name.hashCode() + (int)(referId) : ((int) referId);
   }
 }

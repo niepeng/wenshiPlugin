@@ -1,9 +1,11 @@
 package com.niepeng.webshiplugin.test;
 
 import com.alibaba.fastjson.JSON;
+import com.niepeng.xue.wenshiplugin.bean.AlarmBean;
 import com.niepeng.xue.wenshiplugin.bean.EquBean;
 import com.niepeng.xue.wenshiplugin.common.util.MD5Util;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,6 +17,17 @@ import java.util.List;
 public class TestJson {
 
   public static void main(String[] args) {
+    AlarmBean bean = new AlarmBean();
+    bean.setAddress(1);
+    bean.setAlarmTime(new Date());
+    bean.setLastAlarmTime(null);
+    bean.setReason("dafds");
+
+    String value = JSON.toJSONStringWithDateFormat(bean,"yyyy-MM-dd HH:mm:ss");
+    System.out.println(value);
+  }
+
+  public static void main1(String[] args) {
     List<EquBean> list = new ArrayList<EquBean>();
 
     EquBean equBean = new EquBean();

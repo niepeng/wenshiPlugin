@@ -1,14 +1,13 @@
 package com.niepeng.xue.wenshiplugin.job;
 
 import com.alibaba.fastjson.JSON;
+import com.niepeng.xue.wenshiplugin.bean.AlarmBean;
 import com.niepeng.xue.wenshiplugin.bean.AreaBean;
 import com.niepeng.xue.wenshiplugin.bean.EquBean;
 import com.niepeng.xue.wenshiplugin.bean.UserBean;
 import com.niepeng.xue.wenshiplugin.common.util.DateUtil;
 import com.niepeng.xue.wenshiplugin.common.util.HttpClientService;
 import com.niepeng.xue.wenshiplugin.services.DataService;
-import java.awt.geom.Area;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -149,21 +148,17 @@ public class AutoUploadJob {
         return;
       }
 
+      List<AlarmBean> alarmBeanList = dataService.findAlaram();
+      if (StringUtils.isEmpty(alarmBeanList)) {
+        return;
+      }
 
-//      List<AreaBean> areaList = dataService.findArea();
-//      if (StringUtils.isEmpty(areaList)) {
-//        return;
-//      }
-//
-//      if (!compareSameLastUploadArea(areaList)) {
-//        String value = JSON.toJSONString(areaList);
-//        log.error("uploadAreaData2Server........");
-//        boolean flag = httpParameterPost(urlPrefix + urls[0], keys[0], value, user.getUserId(), user.getPassword());
-//        if (flag) {
-//          lastUploadAreaList = areaList;
-//        }
-//        return;
-//      }
+      // JsonUtil.fields("address,reason,alarmTime,lastAlarmTime", alarmDO)
+      for (AlarmBean tmpBean : alarmBeanList) {
+        String value = JSON.toJSONStringWithDateFormat(tmpBean, DateUtil.DEFAULT_DATE_FMT);
+        httpParameterPost(urlPrefix + urls[2], keys[2], value, user.getUserId(), user.getPassword());
+        Thread.sleep(200);
+      }
 
     } catch (Exception e) {
       log.error("uploadAlarmError", e);
