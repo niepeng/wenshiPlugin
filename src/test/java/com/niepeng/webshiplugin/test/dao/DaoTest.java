@@ -77,6 +77,15 @@ public class DaoTest extends BaseTest {
   }
 
   @Test
+  public void test_sysparam_insert() {
+    String key = "ttttt";
+    SysparamDO r = new SysparamDO();
+    r.setArgskey(key);
+    r.setArgsvalue(key+ "value");
+    sysparamDOMapper.insert(r);
+  }
+
+  @Test
   public void test_workplace_findList() {
     List<WorkplaceDO> list = workplaceDOMapper.findList();
     Assert.assertTrue(!CollectionUtils.isEmpty(list));

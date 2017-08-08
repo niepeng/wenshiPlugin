@@ -61,7 +61,6 @@ public class DataService {
    */
   public UserBean findUser() {
 
-
     SysparamDO userIdParam = sysparamDOMapper.selectByArgskey(Constant.ANDROID_IPHONE_USER_ID);
     SysparamDO userNameParam = sysparamDOMapper.selectByArgskey(Constant.ANDROID_IPHONE_USER_NAME);
     SysparamDO passwordParam = sysparamDOMapper.selectByArgskey(Constant.ANDROID_IPHONE_PSW);
@@ -86,6 +85,24 @@ public class DataService {
       return bean;
     }
     return null;
+  }
+
+  public void bindingUser(UserBean userBean) {
+    SysparamDO userId = new SysparamDO();
+    userId.setArgskey(Constant.ANDROID_IPHONE_USER_ID);
+    userId.setArgsvalue(String.valueOf(userBean.getUserId()));
+
+    SysparamDO userName = new SysparamDO();
+    userName.setArgskey(Constant.ANDROID_IPHONE_USER_NAME);
+    userName.setArgsvalue(userBean.getName());
+
+    SysparamDO password = new SysparamDO();
+    password.setArgskey(Constant.ANDROID_IPHONE_PSW);
+    password.setArgsvalue(userBean.getPassword());
+
+    sysparamDOMapper.insert(userId);
+    sysparamDOMapper.insert(userName);
+    sysparamDOMapper.insert(password);
   }
 
   /**

@@ -23,7 +23,7 @@
       <AppenderRef ref="File" />
     </Logger>
     <!--根记录全部输出到控制台上-->
-    <Root level="debug">
+    <Root level="warn">
       <AppenderRef ref="Console" />
     </Root>
   </Loggers>

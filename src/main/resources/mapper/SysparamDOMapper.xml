@@ -13,7 +13,7 @@
     select 
     <include refid="Base_Column_List" />
     from tsysparam
-    where argsKey = #{argskey,jdbcType=VARCHAR}
+    where argsKey = #{argskey,jdbcType=VARCHAR} order by id desc limit 1
   </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
